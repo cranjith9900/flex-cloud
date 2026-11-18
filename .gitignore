@@ -1,0 +1,9 @@
+# .NET
+server/FlexCloud.Api/bin/
+server/FlexCloud.Api/obj/
+server/FlexCloud.Api/flexcloud.db
+
+# Angular
+flexcloud-client/node_modules/
+flexcloud-client/dist/
+flexcloud-client/.angular/

@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Projects</h2>
+    <a class="btn btn-primary" routerLink="/projects/new">+ Add Project</a>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+  <div *ngIf="loading">Loading...</div>
+
+  <table class="table table-striped" *ngIf="!loading && projects.length">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Client</th>
+        <th>Contact</th>
+        <th>Status</th>
+        <th>Budget</th>
+        <th>Documents</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of projects">
+        <td>{{ p.name }}</td>
+        <td>{{ p.clientName }}</td>
+        <td>{{ p.contactName }}</td>
+        <td>
+          <span class="badge"
+            [class.bg-secondary]="p.status === 'Planning'"
+            [class.bg-primary]="p.status === 'InProgress'"
+            [class.bg-warning]="p.status === 'OnHold'"
+            [class.bg-success]="p.status === 'Completed'">
+            {{ p.status }}
+          </span>
+        </td>
+        <td>{{ p.budget | currency }}</td>
+        <td>{{ p.documentCount }}</td>
+        <td>
+          <a class="btn btn-sm btn-outline-secondary me-1" [routerLink]="['/projects', p.id, 'edit']">Edit</a>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteProject(p.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && !projects.length">No projects found.</p>
+</div>

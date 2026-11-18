@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Leads</h2>
+    <a class="btn btn-primary" routerLink="/leads/new">+ Add Lead</a>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+  <div *ngIf="loading">Loading...</div>
+
+  <table class="table table-striped" *ngIf="!loading && leads.length">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Source</th>
+        <th>Status</th>
+        <th>Est. Value</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let l of leads">
+        <td>{{ l.name }}</td>
+        <td>{{ l.contactName }}</td>
+        <td>{{ l.source }}</td>
+        <td>
+          <span class="badge"
+            [class.bg-primary]="l.status === 'New'"
+            [class.bg-warning]="l.status === 'Qualified'"
+            [class.bg-success]="l.status === 'Converted'"
+            [class.bg-secondary]="l.status === 'Lost'">
+            {{ l.status }}
+          </span>
+        </td>
+        <td>{{ l.estimatedValue | currency }}</td>
+        <td>
+          <a class="btn btn-sm btn-outline-secondary me-1" [routerLink]="['/leads', l.id, 'edit']">Edit</a>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteLead(l.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && !leads.length">No leads found.</p>
+</div>
